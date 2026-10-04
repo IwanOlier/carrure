@@ -105,6 +105,18 @@ const ROUTINES = {
     ['Planche latérale', '30 s / côté', ['Coude sous l’épaule, jambes tendues (ou genoux pliés).', 'Tête, bassin et pieds alignés, pousse le sol. +10 s côté le plus dur.']],
     ['Étirement trapèze gauche', '40 s', ['Assis, main gauche sous la fesse gauche pour bloquer l’épaule.', 'Oreille droite vers l’épaule droite, nez légèrement vers l’aisselle droite.', 'Main droite posée sur la tête si besoin, sans tirer.']],
   ]},
+  etirements: { name: 'Étirements posture', dur: '12 min', intro: 'Une fois par jour, au moment qui t’arrange : après les cours, après la muscu ou la course. Tiens chaque position en respirant lentement, sans forcer.', items: [
+    ['Pecs en 2 hauteurs (cadre de porte)', '2 min', ['Avant-bras sur le montant, coude à hauteur d’épaule : 30 s par bras.', 'Puis main plus haute que la tête, bras presque tendu : 30 s par bras (étire le bas des pecs).', 'Pivote doucement le buste vers l’extérieur, épaule basse et en arrière. Ouvre la poitrine et aide à masquer le sternum creux.']],
+    ['Extension thoracique sur serviette roulée', '1 min 30', ['Roule une serviette de bain bien serrée et pose-la en travers du dos, sous les omoplates.', 'Allongé dessus, genoux pliés, mains derrière la tête, coudes ouverts.', 'Laisse le haut du dos s’ouvrir par-dessus la serviette en expirant. Descends la serviette de 5 cm à mi-temps.', 'Le bas du dos reste au sol, les côtes ne s’ouvrent pas vers le plafond.']],
+    ['Dorsaux à genoux (mains sur le canapé)', '1 min', ['À genoux face au canapé ou une chaise, avant-bras posés dessus, coudes à largeur d’épaules.', 'Recule les fesses vers les talons et laisse la poitrine descendre vers le sol.', 'Mains jointes derrière la tête pour accentuer. Étire les dorsaux et redresse les épaules.']],
+    ['Inclinaison latérale debout', '1 min', ['Debout, pieds serrés, bras levés, attrape le poignet droit avec la main gauche.', 'Tire doucement vers la gauche en poussant la hanche droite vers la droite : 30 s.', 'Change de côté. Tiens 10 s de plus du côté qui tire le plus (utile pour le bassin et la colonne).']],
+    ['Trapèze et élévateur de l’omoplate gauche', '1 min 30', ['Assis, main gauche sous la fesse gauche pour bloquer l’épaule.', 'Trapèze : oreille droite vers l’épaule droite, 45 s.', 'Élévateur : tourne le nez vers l’aisselle droite et baisse la tête, main droite posée dessus sans tirer, 45 s.', 'Si tu as le temps, 15 s de chaque du côté droit.']],
+    ['Fente basse, bras levé', '1 min 30', ['Genou arrière au sol (sur un coussin), pied avant loin devant.', 'Serre la fesse arrière, rentre le bassin, puis lève le bras du côté du genou au sol et penche-toi légèrement vers l’avant opposé.', '45 s par côté. Soulage le bas du dos après la course et la position assise.']],
+    ['Thread the needle (rotation du haut du dos)', '1 min', ['À quatre pattes, glisse le bras droit sous le corps vers la gauche, épaule et tempe au sol.', 'Respire 30 s, puis change de côté.']],
+    ['Ischios debout, dos plat', '1 min', ['Talon posé sur une marche ou une chaise basse, jambe tendue.', 'Penche-toi depuis les hanches en gardant le dos plat, pas en arrondissant. 30 s par jambe.']],
+    ['Ouverture poitrine mains dans le dos', '30 s', ['Debout, doigts croisés derrière le dos, bras tendus.', 'Rapproche les omoplates, éloigne les mains du dos et ouvre la poitrine vers le haut, menton rentré.']],
+    ['Respiration au sol', '1 min', ['Sur le dos, genoux pliés, une main sur la poitrine et une sur le ventre.', 'Inspire 4 s par le nez en gonflant le ventre et les côtes sur les côtés, expire 6–8 s. Les épaules ne montent pas.']],
+  ]},
   soir: { name: 'Routine soir', dur: '10 min', items: [
     ['Fléchisseur de hanche', '1 min 30', ['Un genou au sol, serre la fesse arrière et rentre le bassin.', 'Avance légèrement. 45 s par côté : soulage le bas du dos.']],
     ['Pigeon (ou figure 4 au sol)', '1 min 30', ['Jambe avant pliée devant toi, jambe arrière tendue. 45 s par côté.']],
@@ -116,6 +128,7 @@ const ROUTINES = {
     ['Jambes au mur + respiration', '1 min', ['Fesses près du mur, jambes à la verticale. Inspire 4 s, expire 6–8 s.']],
   ]},
 };
+const ROUTINE_ORDER = ['matin', 'posture', 'etirements', 'soir'];
 
 /* ============ ÉTAT ============ */
 const KEY = 'carrure.v1';
@@ -202,7 +215,7 @@ function renderToday() {
     </button>
     <div class="card" style="gap:0">
       <div class="eyebrow" style="margin-bottom:4px">Routines du jour</div>
-      ${['matin', 'posture', 'soir'].map((r) => `<button class="tap" data-open-routine="${r}">${checkEl(c[r])}<span class="grow"><h3>${ROUTINES[r].name}</h3><span class="small muted">${ROUTINES[r].dur}</span></span><span class="chev">›</span></button>`).join('')}
+      ${ROUTINE_ORDER.map((r) => `<button class="tap" data-open-routine="${r}">${checkEl(c[r])}<span class="grow"><h3>${ROUTINES[r].name}</h3><span class="small muted">${ROUTINES[r].dur}</span></span><span class="chev">›</span></button>`).join('')}
     </div>
     <div class="card">
       <div class="row between"><h2>Pesée</h2>${w ? `<span class="chip good">${w} kg</span>` : ''}</div>
@@ -229,7 +242,7 @@ function renderSessions() {
     <div><div class="eyebrow">${phaseFor(k).name}</div><h1>Séances</h1></div>
     <div class="card" style="gap:0"><div class="eyebrow" style="margin-bottom:4px">Muscu</div>${list(['basA', 'hautA', 'basB', 'hautB'])}</div>
     <div class="card" style="gap:0"><div class="eyebrow" style="margin-bottom:4px">Tapis</div>${list(['cotes', 'z2'])}</div>
-    <div class="card" style="gap:0"><div class="eyebrow" style="margin-bottom:4px">Routines</div>${['matin', 'posture', 'soir'].map((r) => `<button class="tap" data-open-routine="${r}">${checkEl((S.checks[k] || {})[r])}<span class="grow"><h3>${ROUTINES[r].name}</h3><span class="small muted">${ROUTINES[r].dur}</span></span><span class="chev">›</span></button>`).join('')}</div>
+    <div class="card" style="gap:0"><div class="eyebrow" style="margin-bottom:4px">Routines</div>${ROUTINE_ORDER.map((r) => `<button class="tap" data-open-routine="${r}">${checkEl((S.checks[k] || {})[r])}<span class="grow"><h3>${ROUTINES[r].name}</h3><span class="small muted">${ROUTINES[r].dur}</span></span><span class="chev">›</span></button>`).join('')}</div>
     <div class="small muted">Une séance ouverte est enregistrée à la date du jour, même si ce n'est pas celle prévue.</div>`;
 }
 
